@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div{
+            width:80px;
+            height:80px;
+            position:absolute;
+        }
+    </style>
+    <script>
+
+            function rnd(n,m){
+                return parseInt(Math.random()*(m-n)+n);
+            }
+
+            /*function createEle(){
+                var oDiv=document.createElement('div');
+                oDiv.style.background='rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
+                oDiv.style.left=rnd(0,1600)+'px';
+                oDiv.style.top=rnd(0,700)+'px';
+                return oDiv;
+            } */
+            function createEle(){
+                var oDiv=document.createElement('div');
+                oDiv.style.background='rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
+                oDiv.style.left='760px';
+                oDiv.style.top='310px';
+                console.log("lll");
+                return oDiv;
+            }
+            window.onload=function() {
+            /*for(var i=0;i<rnd(20,40);i++){
+                var oDiv=createEle();
+                document.body.appendChild(oDiv);
+            }*/
+            var oDiv=createEle();
+            document.body.appendChild(oDiv);
+            var aDiv=document.getElementsByTagName('div');
+            document.onmousedown=function(ev){
+                var oEvent=ev||event;
+                var oTarget=oEvent.target||oEvent.srcElement;
+                if(oTarget.tagName=='DIV'){
+                    var disX=oEvent.clientX-oTarget.offsetLeft;
+                    var disY=oEvent.clientY-oTarget.offsetTop;
+
+                    document.onmousemove=function(ev){
+                        var oEvent=ev||event;
+                        var l=oEvent.clientX-disX;
+                        var t=oEvent.clientY-disY;
+                        oTarget.style.left=l+'px';
+                        oTarget.style.top=t+'px';
+                    };
+                    document.onmouseup=function(){
+                        document.onmousemove=null;
+                        document.onmouseup=null;
+                    }
+                    return false;
+                }
+            }
+            }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
