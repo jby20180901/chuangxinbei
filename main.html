@@ -23,6 +23,29 @@
             resize: none;
             opacity: 0.5;
         }
+        .tmptexts{
+            position:absolute;
+            left:0px;
+            top:0px;
+            float: left;
+            width: 566px;
+            height: 650px;
+            line-height: 20px;
+            font: 17.5px Courier New,​sans-serif;
+            border: 5px solid #f18200;
+            border-radius: 2px;
+            resize: none;
+            padding: 5px 0 0 45px;
+            margin: 12px;
+            overflow: auto;
+            z-index:-1;
+        }
+        .class1{
+            background-color: white;
+        }
+        .class2{
+            background-color: red;
+        }
         #li{
             background:#ecf0f5;
             height:650px;
@@ -60,6 +83,13 @@
         <div id="ol">
             <textarea id="li" cols="2" rows="80" disabled></textarea>
         </div>
+        <div
+            id="c3" 
+            name="col" 
+            class="tmptexts" 
+            onscroll="G('li').scrollTop = this.scrollTop;"
+        >
+        </div>
         <textarea 
             id="c2" 
             name="co" 
@@ -72,11 +102,51 @@
             onFocus="clearValue('2')" 
             onscroll="G('li').scrollTop = this.scrollTop;" 
             oncontextmenu="return false" 
-            placeholder="请输入代码">
+            placeholder="请输入代码"
+        >
         </textarea>
         <button class="button-yunxing" onclick="yunxing()" type="button">
             运行
         </button>
+        <script>
+            var lines = 0;
+            var ind = 1;
+            var a = 0;
+            function changecolor()
+            {
+                if(ind>lines){
+                    ind = 1;
+                    console.log(a);
+                    console.log("lll");
+                    a = window.clearInterval(a);
+                    document.getElementById(lines.toString()).style.backgroundColor="white";
+                    return;
+                }
+                if(ind!=1&&ind<=lines+1){
+                    document.getElementById((ind-1).toString()).style.backgroundColor="white";
+                } 
+                console.log("ind:"+ind);
+                if(ind<=lines){
+                    console.log("changeclor");
+                    document.getElementById(ind.toString()).style.backgroundColor="red";
+                }
+                ind ++;
+            }
+            function yunxing(){
+                var test = document.getElementById("c2");
+                var text = test.value; 
+                console.log(text);
+                text=text.replace(/\r/gi,"");
+                text=text.split("\n");
+                lines=text.length;
+                console.log("lines"+lines);
+                // var text3 = $("#c2").val(); 
+                a = self.setInterval("changecolor()",500);
+                console.log(a);
+                console.log("ind:"+ind);
+                changecolor();
+            }
+        </script>
     </div>
     <script src="./js/jquery.js"></script>
     <script type="text/javascript">
@@ -153,13 +223,24 @@
         }
         function line(n){
             var lineobj=G("li");
+            var displayobj=G("c3");
+            displayobj.innerHTML = '';
             for(var i=1;i<=n;i++){
+                var div2 = document.createElement("div");  
+                div2.setAttribute('id',i.toString()); 
+                div2.style.backgroundColor="white";
+                div2.style.height="20px";
+                div2.style.width="80000px";
+                div2.style.top=((i-1)*20).toString+"px";
+                div2.style.position="relative"
+                displayobj.appendChild(div2);  
                 if(document.all){
                     num+=i+"\r\n";
                 }else{
                     num+=i+"\n";
                 }
             }
+            
             lineobj.value=num;
             num="";
         }
@@ -168,44 +249,18 @@
             if(!document.all){
                 nV=G("c2").scrollTop;
                 G("li").scrollTop=nV;
+                G("c3").scrollTop=nV;
                 setTimeout("autoScroll()",20);
             }
         }
         if(!document.all){
             window.addEventListener("load",autoScroll,false);
         }
-        lines = 6;
-        var ind = 1;
-        var a = 0;
-        // function changecolor()
-        // {
-        //     if(ind>lines){
-        //     ind = 1;
-        //     console.log(a);
-        //     console.log("lll");
-        //     a = window.clearInterval(a);
-        //     document.getElementById(lines.toString()).style.backgroundColor="white";
-        //     return;
-        //     }
-        //     if(ind!=1&&ind<=lines+1) document.getElementById((ind-1).toString()).style.backgroundColor="white";
-        //     console.log(ind);
-        //     if(ind<=lines)document.getElementById(ind.toString()).style.backgroundColor="red";
-        //     ind ++;
-        // }
-        function yunxing(){
-            var test = document.getElementById("c2");
-            var text = test.value; 
-            console.log(text);
-            // var text3 = $("#c2").val(); 
-            // a = self.setInterval("changecolor()",500);
-            // console.log(a);
-            // changecolor();
-        }
     </script>
     <style>
         div{
-            width:80px;
-            height:80px;
+            width:160px;
+            height:160px;
             position:absolute;
         }
     </style>
@@ -224,8 +279,8 @@
             } */
             function createEle(){
                 var oDiv=document.createElement('div');
-                oDiv.style.background='rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')';
-                oDiv.style.left='760px';
+                oDiv.style.background='rgb(0,0,0)';
+                oDiv.style.left='960px';
                 oDiv.style.top='310px';
                 console.log("lll");
                 return oDiv;
